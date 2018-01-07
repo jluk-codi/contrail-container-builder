@@ -7,6 +7,7 @@
 #   "all" as argument means build all. It's needed if you want to build all and pass some docker opts (see below).
 #   "list" will list all relative paths for build in right order. It's needed for automation. Example: ./build.sh list | grep -v "^INFO:"
 # opts: extra parameters to pass to docker. If you want to pass docker opts you have to specify 'all' as first param (see 'path' argument above)
+set -x
 
 my_file="$(readlink -e "$0")"
 my_dir="$(dirname $my_file)"
@@ -60,8 +61,9 @@ process_container () {
       -e "s/\$LINUX_DISTR/$LINUX_DISTR/g" \
       -e 's|^FROM ${CONTRAIL_REGISTRY}/\([^:]*\):${CONTRAIL_CONTAINER_TAG}|FROM '${CONTRAIL_REGISTRY}'/\1:'${CONTRAIL_CONTAINER_TAG}'|' \
       -e 's|^FROM ${CONTRAIL_TEST_REGISTRY}\(.*\)-${OPENSTACK_VERSION}|FROM '${CONTRAIL_TEST_REGISTRY}'\1-'${OPENSTACK_VERSION}'|' \
+      -e 's|^FROM ${CONTRAIL_REGISTRY}|FROM '${CONTRAIL_REGISTRY}'|' \
       > ${docker_file}.nofromargs
-    docker_file="${docker_file}.nofromargs"
+      docker_file=$docker_file.nofromargs
   else
     build_arg_opts+=" --build-arg CONTRAIL_REGISTRY=${CONTRAIL_REGISTRY}"
     build_arg_opts+=" --build-arg OPENSTACK_VERSION=${OPENSTACK_VERSION}"

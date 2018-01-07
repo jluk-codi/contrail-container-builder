@@ -9,6 +9,7 @@ RUN yum clean all -y && \
     ldconfig
 
 RUN yum install -y python-contrail contrail-test contrail-fabric-utils
+RUN pip install git+https://github.com/Juniper/python-neutronclient@contrail/ocata
 
 RUN mkdir -p /contrail-test/images
 
@@ -17,3 +18,8 @@ ENTRYPOINT ["/entrypoint.sh"]
 LABEL net.juniper.nodemgr.filter.name=contrail-test
 LABEL net.juniper.contrail=test
 LABEL net.juniper.node=test
+
+ARG CONTRAIL_REGISTRY
+ARG CONTRAIL_VERSION
+ARG OPENSTACK_SUBVERSION
+ARG OPENSTACK_VERSION

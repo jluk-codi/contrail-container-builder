@@ -1,0 +1,5 @@
+[thirdpartycache]
+name=Contrail Third Party Cache
+baseurl=http://ci-repo.englab.juniper.net/pulp/repos/opencontrail-tpc/
+enabled=1
+gpgcheck=0

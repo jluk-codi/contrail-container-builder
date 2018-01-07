@@ -32,4 +32,9 @@ COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 RUN mkdir -p /images
 
+ARG CONTRAIL_VERSION
+ARG OPENSTACK_VERSION
+ARG OPENSTACK_SUBVERSION
+ARG CONTRAIL_REGISTRY
+
 COPY entrypoint.sh /
